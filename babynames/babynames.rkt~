@@ -1,0 +1,9 @@
+#lang racket
+
+(require html)
+
+;; parsing xml with regex? are you nuts?
+;; https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags
+
+
+(define (extract-names file))
