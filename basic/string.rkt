@@ -63,19 +63,18 @@
 ;;   'mix', pod' -> 'pox mid'
 ;;   'dog', 'dinner' -> 'dig donner'
 ;; Assume a and b are length 2 or more.
-
-(define (mix-up s1 s2)
-  ;; (define (split s)
-  ;;   (regexp-split #rx"^.{2}" s))
-  ;; (string-join (map ~a (split s1) (split s2))))
-
 (define (split-at s n)
   (values (substring s 0 n)
           (substring s n)))
+
+(define (mix-up s1 s2)
   (let-values (((a1 a2) (split-at s1 2))
                ((b1 b2) (split-at s2 2)))
     (~a b1 a2 " " a1 b2)))
 
+  ;; (define (split s)
+  ;;   (regexp-split #rx"^.{2}" s))
+  ;; (string-join (map ~a (split s1) (split s2))))
 
 
 (check-expect (mix-up "mix" "pod") "pox mid")
@@ -128,6 +127,15 @@
 ;; e.g. 'abcde', the front half is 'abc', the back half 'de'.
 ;; Given 2 strings, a and b, return a string of the form
 ;;  a-front + b-front + a-back + b-back
+
+(define (front-back s1 s2)
+  (define (half s)
+    (split-at s (ceiling (/ (string-length s) 2))))
+
+  (let-values (((a1 a2) (half s1))
+               ((b1 b2) (half s2)))
+    (~a a1 b1 a2 b2)))
+
 
 (check-expect (front-back "abcd" "xy") "abxcdy")
 (check-expect (front-back "abcde" "xyz") "abcxydez")
