@@ -20,12 +20,12 @@
 ;; so 'spring' yields 'spng'. However, if the string length
 ;; is less than 2, return instead the empty string.
 
-(check-expect (both_ends "spring") "spng")
-(check-expect (both_ends "Hello") "Helo")
-(check-expect (both_ends "a") "")
-(check-expect (both_ends "xyz") "xyyz")
+(check-expect (both-ends "spring") "spng")
+(check-expect (both-ends "Hello") "Helo")
+(check-expect (both-ends "a") "")
+(check-expect (both-ends "xyz") "xyyz")
 
-;; C. fix_start
+;; C. fix-start
 ;; Given a string s, return a string
 ;; where all occurences of its first char have
 ;; been changed to '*', except do not change
@@ -35,10 +35,10 @@
 ;; Hint: s.replace(stra, strb) returns a version of string s
 ;; where all instances of stra have been replaced by strb.
 
-(check-expect (fix_start "babble") "ba**le")
-(check-expect (fix_start "aardvark") "a*rdv*rk")
-(check-expect (fix_start "google") "goo*le")
-(check-expect (fix_start "donut") "donut")
+(check-expect (fix-start "babble") "ba**le")
+(check-expect (fix-start "aardvark") "a*rdv*rk")
+(check-expect (fix-start "google") "goo*le")
+(check-expect (fix-start "donut") "donut")
 
 
 ;; D. MixUp
@@ -50,10 +50,10 @@
 ;; Assume a and b are length 2 or more.
 
 
-(check-expect (mix_up "mix" "pod") "pox mid")
-(check-expect (mix_up "dog" "dinner") "dig donner")
-(check-expect (mix_up "gnash" "sport") "spash gnort")
-(check-expect (mix_up "pezzy" "firm") "fizzy perm")
+(check-expect (mix-up "mix" "pod") "pox mid")
+(check-expect (mix-up "dog" "dinner") "dig donner")
+(check-expect (mix-up "gnash" "sport") "spash gnort")
+(check-expect (mix-up "pezzy" "firm") "fizzy perm")
 
 
 
