@@ -1,14 +1,11 @@
 #lang racket
 (require test-engine/racket-tests)
 
-;;------------------------------------------------------------------------------
-;; list1
-;;------------------------------------------------------------------------------
-
 ;; A. match_ends
 ;; Given a list of strings, return the count of the number of
 ;; strings where the string length is 2 or more and the first
 ;; and last chars of the string are the same.
+
 (define (match-ends words)
   (define (first-char s)
     (string-ref s 0))
@@ -63,5 +60,33 @@
               '((3 1) (1 2) (2 3)))
 (check-expect (sort-last '((1 7) (1 3) (3 4 5) (2 2)))
               '((2 2) (1 3) (3 4 5) (1 7)))
+
+
+;; D. Given a list of numbers, return a list where
+;; all adjacent == elements have been reduced to a single element,
+;; so [1, 2, 2, 3] returns [1, 2, 3]. You may create a new list or
+;; modify the passed in list.
+
+(define (remove-adjacent lst) ...)
+
+
+(check-expect (remove-adjacent '(1 2 2 3)) '(1 2 3))
+(check-expect (remove-adjacent '(2 2 3 3 3)) '(2 3))
+(check-expect (remove-adjacent '()) '())
+
+;; E. Given two lists sorted in increasing order, create and return a merged
+;; list of all the elements in sorted order. You may modify the passed in lists.
+;; Ideally, the solution should work in "linear" time, making a single
+;; pass of both lists.
+
+(define (linear-merge l1 l2) ...)
+
+(check-expect  (linear-merge ["aa" "xx" "zz"] ["bb" "cc"])
+               ["aa" "bb" "cc" "xx" "zz"])
+(check-expect  (linear-merge ["aa" "xx"] ["bb" "cc" "zz"])
+               ["aa" "bb" "cc" "xx" "zz"])
+(check-expect  (linear-merge ["aa" "aa"] ["aa" "bb" "bb"])
+               ["aa" "aa" "aa" "bb" "bb"])
+
 
 (test)
