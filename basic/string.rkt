@@ -112,7 +112,7 @@
 ;; So 'This dinner is not that bad!' yields:
 ;; This dinner is good!
 
-
+(define (not-bad s) (void))
 
 
 (check-expect (not-bad "This movie is not so bad") "This movie is good")
