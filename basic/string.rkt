@@ -9,6 +9,9 @@
 ;; So donuts(5) returns 'Number of donuts: 5'
 ;; and donuts(23) returns 'Number of donuts: many'
 
+(define (donuts i)
+  (~a "Number of donuts: " (if (< i 10) i "many")))
+
 (check-expect (donuts 4) "Number of donuts: 4")
 (check-expect (donuts 9) "Number of donuts: 9")
 (check-expect (donuts 10) "Number of donuts: many")
@@ -19,6 +22,14 @@
 ;; and the last 2 chars of the original string,
 ;; so 'spring' yields 'spng'. However, if the string length
 ;; is less than 2, return instead the empty string.
+
+(define (both-ends s)
+  (if (> 2 (string-length s))
+      ""
+      (let ((s1 (string->list s)))
+        (list->string (append (take s1 2)
+                              (take-right s1 2))))))
+
 
 (check-expect (both-ends "spring") "spng")
 (check-expect (both-ends "Hello") "Helo")
@@ -35,6 +46,10 @@
 ;; Hint: s.replace(stra, strb) returns a version of string s
 ;; where all instances of stra have been replaced by strb.
 
+(define (fix-start s)
+  (let ((r (string-ref s 0)))
+    (~a r (string-replace (substring s 1) (~a r) "*"))))
+
 (check-expect (fix-start "babble") "ba**le")
 (check-expect (fix-start "aardvark") "a*rdv*rk")
 (check-expect (fix-start "google") "goo*le")
@@ -48,6 +63,19 @@
 ;;   'mix', pod' -> 'pox mid'
 ;;   'dog', 'dinner' -> 'dig donner'
 ;; Assume a and b are length 2 or more.
+
+(define (mix-up s1 s2)
+  ;; (define (split s)
+  ;;   (regexp-split #rx"^.{2}" s))
+  ;; (string-join (map ~a (split s1) (split s2))))
+
+(define (split-at s n)
+  (values (substring s 0 n)
+          (substring s n)))
+  (let-values (((a1 a2) (split-at s1 2))
+               ((b1 b2) (split-at s2 2)))
+    (~a b1 a2 " " a1 b2)))
+
 
 
 (check-expect (mix-up "mix" "pod") "pox mid")
@@ -64,7 +92,13 @@
 ;; add 'ly' instead.
 ;; If the string length is less than 3, leave it unchanged.
 ;; Return the resulting string.
-
+(define (verbing s)
+  (let ((len (string-length s)))
+    (~a s (if (> len 3)
+              (if (string=? "ing" (substring s (- len 3)  len))
+                  "ly"
+                  "ing")
+              ""))))
 
 (check-expect (verbing "hail") "hailing")
 (check-expect (verbing "swiming") "swimingly")
@@ -78,6 +112,9 @@
 ;; Return the resulting string.
 ;; So 'This dinner is not that bad!' yields:
 ;; This dinner is good!
+
+
+
 
 (check-expect (not-bad "This movie is not so bad") "This movie is good")
 (check-expect (not-bad "This dinner is not that bad!") "This dinner is good!")
