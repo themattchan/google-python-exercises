@@ -67,7 +67,14 @@
 ;; so [1, 2, 2, 3] returns [1, 2, 3]. You may create a new list or
 ;; modify the passed in list.
 
-(define (remove-adjacent lst) ...)
+(define (remove-adjacent lst)
+  (match lst
+    ['() lst]
+    [`(,a) lst]
+    [`(,a ,b ,c ...)
+     (if (= a b)
+         (remove-adjacent (cdr lst))
+         (cons a (remove-adjacent (cdr lst))))]))
 
 
 (check-expect (remove-adjacent '(1 2 2 3)) '(1 2 3))
@@ -79,14 +86,20 @@
 ;; Ideally, the solution should work in "linear" time, making a single
 ;; pass of both lists.
 
-(define (linear-merge l1 l2) ...)
+(define/match (linear-merge l1 l2)
+  [(l1 '()) l1]
+  [('() l2) l2]
+  [(`(,a ,as ...) `(,b ,bs ...))
+   (if (string<? a b)
+       (cons a (linear-merge as l2))
+       (cons b (linear-merge l1 bs)))])
 
-(check-expect  (linear-merge ["aa" "xx" "zz"] ["bb" "cc"])
-               ["aa" "bb" "cc" "xx" "zz"])
-(check-expect  (linear-merge ["aa" "xx"] ["bb" "cc" "zz"])
-               ["aa" "bb" "cc" "xx" "zz"])
-(check-expect  (linear-merge ["aa" "aa"] ["aa" "bb" "bb"])
-               ["aa" "aa" "aa" "bb" "bb"])
+(check-expect  (linear-merge '("aa" "xx" "zz") '("bb" "cc"))
+               '("aa" "bb" "cc" "xx" "zz"))
+(check-expect  (linear-merge '("aa" "xx") '("bb" "cc" "zz"))
+               '("aa" "bb" "cc" "xx" "zz"))
+(check-expect  (linear-merge '("aa" "aa") '("aa" "bb" "bb"))
+               '("aa" "aa" "aa" "bb" "bb"))
 
 
 (test)
